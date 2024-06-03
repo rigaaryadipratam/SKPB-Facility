@@ -1,6 +1,6 @@
 <?php
 
-$db = mysqli_connect("localhost", "root", "", "booking_system");
+$db = mysqli_connect("localhost", "root", "", "booking_system2");
 
 function upload_ktp()
 {

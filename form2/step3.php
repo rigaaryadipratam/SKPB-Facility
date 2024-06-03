@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sesi6 = isset($_POST["sesi6"]) ? 1 : 0;
 
     // Your database connection code here
-    $conn = mysqli_connect("localhost", "root", "", "booking_system");
+    $conn = mysqli_connect("localhost", "root", "", "booking_system2");
     // Query to get available rooms for the given date and session from the database
     // Assume $conn is the database connection object
     // $sql = "SELECT DISTINCT nama_ruangan FROM ruangan 

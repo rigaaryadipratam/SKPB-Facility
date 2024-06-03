@@ -47,7 +47,7 @@ $tanggalAkhir = date("Y-m-d", strtotime("$tahun-$bulan-$endDay"));
 $host = 'localhost';
 $user = 'root';
 $pass = '';
-$db = 'booking_system';
+$db = 'booking_system2';
 
 $koneksi = new mysqli($host, $user, $pass, $db);
 

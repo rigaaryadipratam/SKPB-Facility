@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ruanganArray = $_POST["ruangan"];
 
     // Your database connection code here
-    $conn = mysqli_connect("localhost", "root", "", "booking_system");
+    $conn = mysqli_connect("localhost", "root", "", "booking_system2");
 
     foreach ($ruanganArray as $ruangan) {
         // Insert data into pengajuan2 table for each selected room

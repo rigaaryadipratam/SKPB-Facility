@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ruanganArray = $_POST["ruangan"];
 
     // Your database connection code here
-    $conn = mysqli_connect("localhost", "root", "", "booking_system");
+    $conn = mysqli_connect("localhost", "root", "", "booking_system2");
 
 
 

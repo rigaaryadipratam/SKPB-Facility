@@ -172,7 +172,7 @@ if (isset($_POST["submit"])) {
                           <input name="tanggal" type="date" value="<?= $ajuan_peminjaman["tanggal"]; ?>" class="form-control" id="tanggal" placeholder="Pilih Tanggal">
                         </div> 
                   <?php
-                    $db = mysqli_connect("localhost", "root", "", "booking_system");
+                    $db = mysqli_connect("localhost", "root", "", "booking_system2");
                     if (!$db) {
                         die("Koneksi database gagal: " . mysqli_connect_error());
                     }
@@ -211,7 +211,7 @@ if (isset($_POST["submit"])) {
 
 
                       <?php
-                          $db = mysqli_connect("localhost", "root", "", "booking_system");
+                          $db = mysqli_connect("localhost", "root", "", "booking_system2");
                           if (!$db) {
                             die("Koneksi database gagal: " . mysqli_connect_error());
                           }

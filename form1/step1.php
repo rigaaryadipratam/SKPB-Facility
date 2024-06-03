@@ -95,7 +95,7 @@
                                 <select id="departemen" name="unit_departemen" class="w-full bg-slate-200 text-dark p-2 rounded-md focus:outline-none focus:ring-primary focus:ring-1 focus:border-primary" required>
                                     <option value="" disabled selected hidden>Pilih Unit/Departemen</option>
                                     <?php
-                                    $db = mysqli_connect("localhost", "root", "", "booking_system");
+                                    $db = mysqli_connect("localhost", "root", "", "booking_system2");
                                     $result = mysqli_query($db, "SELECT * FROM unit_departemen");
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         echo "<option value='" .  $row['nama_unit'] . "'>" . $row['nama_unit'] . "</option>";

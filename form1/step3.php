@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sesi6 = isset($_POST["sesi6"]) ? 1 : 0;
 
     // Your database connection code here
-    $conn = mysqli_connect("localhost", "root", "", "booking_system");
+    $conn = mysqli_connect("localhost", "root", "", "booking_system2");
     $sql = "SELECT DISTINCT nama_ruangan FROM ruangan 
     WHERE nama_ruangan NOT IN (
         SELECT ruangan FROM pengajuan2 

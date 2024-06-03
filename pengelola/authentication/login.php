@@ -70,14 +70,10 @@
   if (isset($_POST["login"])) {
 
    $email = $_POST["email"];
-    $password = $_POST["password"];
+   $password = hash('sha256', $_POST["password"]);
     
-   
-
     $result = mysqli_query($db, "SELECT * FROM `admin` WHERE password='$password' AND email='$email'");
     
-    
-
     // cek username
     if (mysqli_num_rows($result) > 0) {
 
