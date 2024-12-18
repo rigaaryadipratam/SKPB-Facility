@@ -47,7 +47,7 @@ $tanggalAkhir = date("Y-m-d", strtotime("$tahun-$bulan-$endDay"));
 $host = 'localhost';
 $user = 'root';
 $pass = '';
-$db = 'booking_system2';
+$db = 'booking_system';
 
 $koneksi = new mysqli($host, $user, $pass, $db);
 
@@ -63,10 +63,11 @@ $html .= "<div class='px-4 py-2'>";
 $html .= "<h2 class='text-lg'><b>Tabel Utilitas</b> (Scroll Ke samping)</h2>";
 $html .= "<h2 class='text-lg'>Keterangan:</h2>";
 $html .= "<div class='grid grid-cols-2 justify-center items-center lg:flex lg:flex-wrap lg:justify-start px-4'>"; 
-$html .= "<div class='px-1 py-1 m-1 text-center'> <span class='inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-base font-bold ring-1 ring-inset ring-slate-600 text-slate-600'>Mata Kuliah SKPB</span></div>";
+$html .= "<div class='px-1 py-1 m-1 text-center'> <span class='inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-base font-bold ring-1 ring-inset ring-red-600 text-red-600'>Menunggu Persetujuan</span></div>";
 $html .= "<div class='px-1 py-1 m-1 text-center'><span class='inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-base font-bold ring-1 ring-inset ring-yellow-400 text-yellow-400'>Peminjaman Disetujui</span></div>";
 $html .= "<div class='px-1 py-1 m-1 text-center'><span class='inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-base font-bold ring-1 ring-inset ring-yellow-700 text-yellow-700'>Peminjaman Insidentil Terverifikasi</span></div>";
 $html .= "<div class='px-1 py-1 m-1 text-center'> <span class='inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-base font-bold ring-1 ring-inset ring-green-600 text-green-600'>Peminjaman 1 Semester Terverifikasi</span></div>";
+$html .= "<div class='px-1 py-1 m-1 text-center'> <span class='inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-base font-bold ring-1 ring-inset ring-slate-600 text-slate-600'>Mata Kuliah SKPB</span></div>";
 $html .= "</div>";
 $html .= "</div>";
 $html .= "<div class='overflow-x-auto'>";
@@ -116,7 +117,7 @@ if ($resultRuangan->num_rows > 0) {
         for ($i = 0; $i < $jumlahHariMingguIni; $i++) {
             for ($j = 1; $j <= 6; $j++) {
                 $tanggal = date("Y-m-d", strtotime("$tanggalAwal + $i days"));
-                $sqlPengajuan = "SELECT * FROM pengajuan2 WHERE ruangan = '{$rowRuangan['nama_ruangan']}' AND tanggal = '$tanggal' AND sesi$j = 1 AND status != 'Ditolak' AND status != 'Menunggu Persetujuan'";
+                $sqlPengajuan = "SELECT * FROM pengajuan2 WHERE ruangan = '{$rowRuangan['nama_ruangan']}' AND tanggal = '$tanggal' AND sesi$j = 1 AND status != 'Ditolak'";
                 $resultPengajuan = $koneksi->query($sqlPengajuan);
 
                 // Periksa apakah data sesuai dengan ruangan, tanggal, dan sesi yang sedang diproses
@@ -127,6 +128,10 @@ if ($resultRuangan->num_rows > 0) {
 
                     // Memilih warna teks berdasarkan status
                     switch ($status) {
+                        case 'Menunggu Persetujuan':
+                            $statusColor = 'text-red-400';
+                            $statusring = 'ring-red-400';
+                            break;
                         case 'Disetujui':
                             $statusColor = 'text-yellow-400';
                             $statusring = 'ring-yellow-400';

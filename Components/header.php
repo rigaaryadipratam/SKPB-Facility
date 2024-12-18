@@ -50,7 +50,8 @@
                          </div>
 
                          <li class="group">
-                             <a target="_blank" href="https://drive.google.com/file/d/11_OqzUNwCv9FVzDQQhy0KkPmHDobn0sc/view?usp=drivesdk" class="hover:font-bold  hover:text-blue-900 text-base text-dark py-3 mx-4 xl:mx-8 flex group-hover:text-primary ">Panduan</a>
+                             <a target="_blank" href="https://docs.google.com/document/d/17rBbQvDRMRk83FINSq9imdO0uoRdHBgMwBDpe-yftHk/edit
+                            " class="hover:font-bold  hover:text-blue-900 text-base text-dark py-3 mx-4 xl:mx-8 flex group-hover:text-primary ">Panduan</a>
                          </li>
                          <li class="group">
                              <a href="utilitas.php" class="hover:font-bold  hover:text-blue-900 text-base text-dark py-3 mx-4 xl:mx-8 flex group-hover:text-primary ">Utilitas Ruang</a>

@@ -1,13 +1,17 @@
-<?php   
+<?php
     session_start();
-    require '../function.php';
-
+    
     $kode_peminjaman = uniqid();
     $_SESSION['kode_peminjaman'] = $kode_peminjaman;
-    if(isset($_POST["submit"])) {
-        $foto_ktp = upload_ktp();
-        $_SESSION['foto_ktp'] = $foto_ktp;
-    }
+
+    // if(isset($_POST["submit"])) {
+    //     $foto_ktp = upload_ktp();
+    //     if ($foto_ktp) {
+    //         $_SESSION['foto_ktp'] = $foto_ktp;
+    //     } else{
+    //         echo "Gagal";
+    //     }
+    // }
 
 ?>
 
@@ -21,11 +25,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="../dist/img/component/Logo_SKPB-biru.png">
     <link rel="stylesheet" href="../dist/output.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .checkbox-group input[type="checkbox"],
         .checkbox-group label {
             display: none;
             position: relative;
+        }
+        .swal2-confirm {
+            background-color: #007bff !important;
+            border-color: #007bff !important;
+            color: white !important;
         }
     </style>
 </head>
@@ -81,12 +91,12 @@
                             </label>
                         </div>
 
-                        <div class="w-full px-3 mb-2">
+                        <!-- <div class="w-full px-3 mb-2">
                             <label for="foto_ktp">
                                 <span class="block font-bold mb-1 text-slate-800 after:content-['*'] after:text-pink-600 after:ml-0.5">Upload KTP/KTM</span>
                                 <input type="file" id="foto_ktp" name="foto_ktp" class="w-full bg-slate-200 text-dark p-2 rounded-md focus:outline-none focus:ring-primary focus:ring-1 focus:border-primary mb-2" required>
                             </label>
-                        </div>
+                        </div> -->
 
 
                         <div class="w-full px-4 mb-4 ">
@@ -95,7 +105,7 @@
                                 <select id="departemen" name="unit_departemen" class="w-full bg-slate-200 text-dark p-2 rounded-md focus:outline-none focus:ring-primary focus:ring-1 focus:border-primary" required>
                                     <option value="" disabled selected hidden>Pilih Unit/Departemen</option>
                                     <?php
-                                    $db = mysqli_connect("localhost", "root", "", "booking_system2");
+                                    $db = mysqli_connect("localhost", "root", "", "booking_system");
                                     $result = mysqli_query($db, "SELECT * FROM unit_departemen");
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         echo "<option value='" .  $row['nama_unit'] . "'>" . $row['nama_unit'] . "</option>";
@@ -136,46 +146,56 @@
 
     <!-- <script src="dist/js/slider.js"></script> -->
     <script src="../dist/js/script.js"></script>
-    <script type="module" src="../script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="script.js"></script>
+
     <script>
-    function validateForm() {
-        let nrpValue = document.getElementById('nrp').value.trim();
-        if (nrpValue !== '' && (!/^\d+$/.test(nrpValue) && parseInt(nrpValue) <= 0)) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'NRP/NIP/NPP tidak valid!',
-            });
-            document.getElementById('nrp').value = '';
-            return false;
-        }
+        function validateForm() {
+            let nrpValue = document.getElementById('nrp').value.trim();
+            if (nrpValue !== '' && (!/^\d+$/.test(nrpValue) || parseInt(nrpValue) <= 0)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'NRP/NIP/NPP tidak valid!',
+                    customClass: {
+                            confirmButton: "swal2-confirm"
+                    }
+                });
+                document.getElementById('nrp').value = '';
+                return false;
+            }
 
-        let whatsappValue = document.getElementById('whatsapp').value.trim();
-        if (whatsappValue !== '' && (!/^\d+$/.test(whatsappValue) && parseInt(whatsappValue) <= 0)) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Nomor Whatsapp tidak valid!',
-            });
-            document.getElementById('whatsapp').value = '';
-            return false;
-        }
+            let whatsappValue = document.getElementById('whatsapp').value.trim();
+            if (whatsappValue !== '' && (!/^\d+$/.test(whatsappValue) || parseInt(whatsappValue) <= 0)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Nomor Whatsapp tidak valid!',
+                    customClass: {
+                            confirmButton: "swal2-confirm"
+                    }
+                });
+                document.getElementById('whatsapp').value = '';
+                return false;
+            }
 
-        let jumlahhariValue = document.getElementById('jumlahhari').value.trim();
-        if (jumlahhariValue !== '' && (!/^\d+$/.test(jumlahhariValue) && parseInt(jumlahhariValue) <= 0)) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Input hari tidak valid!',
-            });
-            document.getElementById('jumlahhari').value = '';
-            return false;
-        }
+            let jumlahhariValue = document.getElementById('jumlahhari').value.trim();
+            if (jumlahhariValue !== '' && (!/^\d+$/.test(jumlahhariValue) || parseInt(jumlahhariValue) <= 0)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Input hari tidak valid!',
+                    customClass: {
+                            confirmButton: "swal2-confirm"
+                    }
+                });
+                document.getElementById('jumlahhari').value = '';
+                return false;
+            }
 
-        return true;
-    }
-</script>
+            return true;
+        }
+    </script>
+
 
 
 </body>

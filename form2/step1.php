@@ -74,12 +74,12 @@ $_SESSION['kode_peminjaman'] = $kode_peminjaman;
                             </label>
                         </div>
 
-                        <div class="w-full px-3 mb-2">
+                        <!-- <div class="w-full px-3 mb-2">
                             <label for="foto_ktp">
                                 <span class="block font-bold mb-1 text-slate-800 after:content-['*'] after:text-pink-600 after:ml-0.5">Upload KTP/KTM</span>
                                 <input type="file" id="foto_ktp" name="foto_ktp" class="w-full bg-slate-200 text-dark p-2 rounded-md focus:outline-none focus:ring-primary focus:ring-1 focus:border-primary mb-2" required>
                             </label>
-                        </div>
+                        </div> -->
 
                         <div class="w-full px-4 mb-4 ">
                             <label for="departemen">
@@ -87,7 +87,7 @@ $_SESSION['kode_peminjaman'] = $kode_peminjaman;
                                 <select id="departemen" name="unit_departemen" class="w-full bg-slate-200 text-dark p-2 rounded-md focus:outline-none focus:ring-primary focus:ring-1 focus:border-primary" required>
                                     <option value="" disabled selected hidden>Pilih Unit/Departemen</option>
                                     <?php
-                                    $db = mysqli_connect("localhost", "root", "", "booking_system2");
+                                    $db = mysqli_connect("localhost", "root", "", "booking_system");
                                     $result = mysqli_query($db, "SELECT * FROM unit_departemen");
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         echo "<option value='" . $row['nama_unit'] . "'>" . $row['nama_unit'] . "</option>";

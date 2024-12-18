@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama = $_POST["nama"];
     $nrp = $_POST["nrp"];
     $whatsapp = $_POST["whatsapp"];
-    $foto_ktp = $_POST["foto_ktp"];
+    // $foto_ktp = $_POST["foto_ktp"];
     $unit_departemen = $_POST["unit_departemen"];
     $nama_acara = $_POST["nama_acara"];
     $jumlah = $_POST["jumlah"];
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sesi6 = isset($_POST["sesi6"]) ? 1 : 0;
 
     // Your database connection code here
-    $conn = mysqli_connect("localhost", "root", "", "booking_system2");
+    $conn = mysqli_connect("localhost", "root", "", "booking_system");
     // Query to get available rooms for the given date and session from the database
     // Assume $conn is the database connection object
     // $sql = "SELECT DISTINCT nama_ruangan FROM ruangan 
@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="hidden" name="nama" value="<?php echo $nama; ?>">
                         <input type="hidden" name="nrp" value="<?php echo $nrp; ?>">
                         <input type="hidden" name="whatsapp" value="<?php echo $whatsapp; ?>">
-                        <input type="hidden" name="foto_ktp" value="<?php echo $foto_ktp; ?>">
+                        <!-- <input type="hidden" name="foto_ktp" value="<?php echo $foto_ktp; ?>"> -->
                         <input type="hidden" name="unit_departemen" value="<?php echo $unit_departemen; ?>">
                         <input type="hidden" name="jumlah" value="<?php echo $jumlah; ?>">
                         <input type="hidden" name="kode_peminjaman" value="<?php echo $kode_peminjaman; ?>">

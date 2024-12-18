@@ -203,7 +203,7 @@ if (isset($_POST["submitAll"])) {
                         </div>
 
                         <?php
-                          $db = mysqli_connect("localhost", "root", "", "booking_system2");
+                          $db = mysqli_connect("localhost", "root", "", "booking_system");
                           if (!$db) {
                             die("Koneksi database gagal: " . mysqli_connect_error());
                           }
@@ -247,7 +247,7 @@ if (isset($_POST["submitAll"])) {
 
                   <div class="col-md-6">
                   <?php
-                    $db = mysqli_connect("localhost", "root", "", "booking_system2");
+                    $db = mysqli_connect("localhost", "root", "", "booking_system");
                     if (!$db) {
                         die("Koneksi database gagal: " . mysqli_connect_error());
                     }
@@ -286,7 +286,7 @@ if (isset($_POST["submitAll"])) {
 
 
                       <?php
-                          $db = mysqli_connect("localhost", "root", "", "booking_system2");
+                          $db = mysqli_connect("localhost", "root", "", "booking_system");
                           if (!$db) {
                             die("Koneksi database gagal: " . mysqli_connect_error());
                           }

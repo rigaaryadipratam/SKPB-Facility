@@ -1,6 +1,6 @@
 <?php
 require '../function.php';
-$foto_ktp = isset($_SESSION['foto_ktp']) ? $_SESSION['foto_ktp'] : null;
+// $foto_ktp = isset($_SESSION['foto_ktp']) ? $_SESSION['foto_ktp'] : null;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kode_peminjaman = $_POST["kode_peminjaman"];
     $nama = $_POST["nama"];
@@ -20,12 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ruanganArray = $_POST["ruangan"];
 
     // Your database connection code here
-    $conn = mysqli_connect("localhost", "root", "", "booking_system2");
+    $conn = mysqli_connect("localhost", "root", "", "booking_system");
 
     foreach ($ruanganArray as $ruangan) {
         // Insert data into pengajuan2 table for each selected room
         $sql = "INSERT INTO pengajuan2 (kode_peminjaman, jenis, nama, nrp, whatsapp, foto_ktp, unit_departemen, nama_acara, tanggal, sesi1, sesi2, sesi3, sesi4, sesi5, sesi6, ruangan, surat_skpb, surat_sarpras, status) 
-                VALUES ('$kode_peminjaman','insidentil','$nama', '$nrp', '$whatsapp', '$foto_ktp', '$unit_departemen', '$nama_acara' ,'$tanggal', $sesi1, $sesi2, $sesi3, $sesi4, $sesi5, $sesi6, '$ruangan', ' ',' ','Menunggu Persetujuan')";
+                VALUES ('$kode_peminjaman','insidentil','$nama', '$nrp', '$whatsapp', ' ', '$unit_departemen', '$nama_acara' ,'$tanggal', $sesi1, $sesi2, $sesi3, $sesi4, $sesi5, $sesi6, '$ruangan', ' ',' ','Menunggu Persetujuan')";
 
         if (mysqli_query($conn, $sql)) {
             // Do nothing here, just continue to the next room
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../success.php?kode_peminjaman=$kode_peminjaman&nrp=$nrp");
     } else {
         $jumlah -= 1;
-        header("Location: step2.php?nama=$nama&jumlah=$jumlah&kode_peminjaman=$kode_peminjaman&nrp=$nrp&whatsapp=$whatsapp&foto_ktp=$foto_ktp&unit_departemen=$unit_departemen&nama_acara=$nama_acara");
+        header("Location: step2.php?nama=$nama&jumlah=$jumlah&kode_peminjaman=$kode_peminjaman&nrp=$nrp&whatsapp=$whatsapp&unit_departemen=$unit_departemen&nama_acara=$nama_acara");
     }
 }
 

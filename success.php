@@ -1,13 +1,37 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>SKPB ITS</title>
+    <link rel="icon" href="dist/img/component/Logo_SKPB-biru.png">
+    <link rel="stylesheet" href="dist/output.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .swal2-confirm {
+            background-color: #007bff !important;
+            border-color: #007bff !important;
+            color: white !important;
+        }
+
+    </style>
+</head>
+
+<body>
 <?php
 require 'function.php';
-
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     $kode_peminjaman = $_GET["kode_peminjaman"];
-    $nrp = $_GET["nrp"];
+    // $nrp = $_GET["nrp"];
 
-    $sql = "SELECT * FROM pengajuan2 WHERE kode_peminjaman = '$kode_peminjaman' AND nrp = '$nrp' AND status!='Kelas SKPB'";
+    // $sql = "SELECT * FROM pengajuan2 WHERE kode_peminjaman = '$kode_peminjaman' AND nrp = '$nrp' AND status!='Kelas SKPB'";
+    $sql = "SELECT * FROM pengajuan2 WHERE kode_peminjaman = '$kode_peminjaman' AND status!='Kelas SKPB'";
     $result = mysqli_query($db, $sql);
 
         if ($result->num_rows > 0) {
@@ -15,10 +39,42 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
         } else {
             echo "<script>
-                alert('NRP/NIP/NPP Peminjam atau No Kode Peminjaman tidak valid! Silahkan periksa kembali!'); 
+                alert('No Kode Peminjaman tidak valid! Silahkan periksa kembali!'); 
                 window.history.back();
             </script>";
             exit();
+        }
+    }
+
+    if(isset($_POST["submit_ktp"])) {
+        // cek apakah data berhasil ditambahkan atau tidak
+        if(up_ktp($_POST) > 0 && upload_ktp() !== false) {
+            echo '<script>
+                window.onload = function() {
+                    Swal.fire({
+                        title: "Dokumen Berhasil Diupload!",
+                        text: "Cek status secara berkala",
+                        icon: "success",
+                        customClass: {
+                            confirmButton: "swal2-confirm"
+                    }
+                    }).then(function() {
+                        exit;
+                    });
+                };
+            </script>';
+        } else {
+            echo '<script>
+                window.onload = function() {
+                    Swal.fire({
+                        title: "Dokumen Gagal Diupload!",
+                        text: "Perhatikan ukuran dan format file.",
+                        icon: "error"
+                    }).then(function() {
+                        exit;
+                    });
+                };
+            </script>';
         }
     }
     
@@ -30,7 +86,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     Swal.fire({
                         title: "Dokumen Berhasil Diupload!",
                         text: "Cek status secara berkala",
-                        icon: "success"
+                        icon: "success",
+                        customClass: {
+                            confirmButton: "swal2-confirm"
+                    }
                     }).then(function() {
                         exit;
                     });
@@ -58,7 +117,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     Swal.fire({
                         title: "Dokumen Berhasil Diupload!",
                         text: "Cek status secara berkala",
-                        icon: "success"
+                        icon: "success",
+                        customClass: {
+                            confirmButton: "swal2-confirm"
+                    }
                     }).then(function() {
                         exit;
                     });
@@ -95,21 +157,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>SKPB ITS</title>
-    <link rel="icon" href="dist/img/component/Logo_SKPB-biru.png">
-    <link rel="stylesheet" href="dist/output.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-
-<body>
-
     <?php
 
     require 'components/header.php';
@@ -127,7 +174,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     </div>
 
 
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <form action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                         <?php
                             $kode_peminjaman = $_GET["kode_peminjaman"];
 
@@ -137,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         ?>
 
                         <div class="my-2 w-full px-4 mb-2">
-                        <h1 class="text-primary font-semibold"><i>Simpan kode peminjaman dan harap cek status peminjaman anda pada halaman ini secara berkala.</i></h1>
+                        <h1 class="text-primary font-semibold"><i>Simpan kode peminjaman dan silakan upload berkas dibawah. Harap cek status peminjaman anda pada halaman ini secara berkala</i></h1>
                             <!-- <h1>Pengajuan anda <b>berhasil! </b> Silahkan ingat atau catat <b>Kode Peminjaman</b> dibawah ini, untuk pengecekan berkala kedepannya.
                             </h1>
                             <br> -->
@@ -155,7 +202,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                             <label for="nrp" class="text-base font-bold ">NRP/NIP/NPP</label>
                             <input type="text" readonly value="<?= $row["nrp"]  ?>" id="nrp" class="w-full bg-slate-200 text-dark p-2 rounded-md  focus:outline-none  focus:ring-primary focus:ring-1 focus:border-primary" />
                         </div>
-                        <div class="w-full px-4 mb-6">
+                        <div class="w-full px-4 mb-2">
                             <label for="status" class="text-base font-bold">Status Pengajuan</label> <br>
                             <input type="text" readonly value="<?= $row["status"]  ?>" id="status" class="w-full bg-slate-200 text-dark p-2 rounded-md focus:outline-none focus:ring-primary focus:ring-1 focus:border-primary font-bold" 
                                 style="background-color: <?php 
@@ -174,6 +221,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                             
                         </div>
 
+
+                        <?php if ($row['status'] == 'Menunggu Persetujuan'): ?>
+                            <div class="w-full px-4 mb-4">
+                                <label for="file">
+                                    <span class="block font-bold mb-1 text-slate-800 after:content-['*'] after:text-pink-600 after:ml-0.5">
+                                        Upload KTP/KTM</span>
+                                    <input type="file" id="foto_ktp" name="foto_ktp" class="w-full bg-slate-200 text-dark p-2 rounded-md focus:outline-none focus:ring-primary focus:ring-1 focus:border-primary mb-2" required>
+                                </label>
+
+                                <div class="w-full px-4 mb-6 justify-start">
+                                    <button id="submit_ktp" name="submit_ktp" class="text-base font-semibold text-white bg-primary py-3 px-8 rounded-full hover:shadow-lg hover:opacity-80 transition duration-300 ease-in-out">Submit</button>
+                                </div>
+                            </div>
+                        <?php endif; ?>
 
                         <?php if ($row['status'] == 'Disetujui'): ?>
                             <div class="w-full px-4 mb-4">
@@ -194,7 +255,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                             <div class="w-full px-4 mb-4">
                                 <label for="file">
                                     <span class="block font-bold mb-1 text-slate-800 after:content-['*'] after:text-pink-600 after:ml-0.5">Upload
-                                        Surat Persetujuan Dari Sarpras</span>
+                                        Surat Sarpras</span>
                                     <input type="file" id="surat_sarpras" name="surat_sarpras" class="w-full bg-slate-200 text-dark p-2 rounded-md focus:outline-none focus:ring-primary focus:ring-1 focus:border-primary mb-2" required>
                                 </label>
 
@@ -206,9 +267,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 
                    
-                    <div class="w-full px-4 mb-6 flex justify-end">
+                    <!-- <div class="w-full px-4 mb-6 flex justify-end">
                         <button id="btn-save-as-pdf" class="text-base font-semibold text-white bg-primary py-3 px-8 rounded-full hover:shadow-lg hover:opacity-80 transition duration-300 ease-in-out">Save as PDF</button>
-                    </div>
+                    </div> -->
                 </form>
 
                    
@@ -227,8 +288,116 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 
     <!-- <script src="dist/js/slider.js"></script> -->
-    <script src="../dist/js/script.js"></script>
-    <script type="module" src="../script.js"></script>
+    <script src="dist/js/script.js"></script>
+    <script type="module" src="script.js"></script>
+    <script>
+        function validateForm() {
+            let allowedExtensions = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
+            let allowedExtensions2 = /(\.pdf|\.doc|\.docx)$/i;
+
+            // foto ktp/ktm
+            let fileInput = document.getElementById('foto_ktp');
+            if (fileInput) {
+                let filePath = fileInput.value;
+
+                if (!allowedExtensions.exec(filePath)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Format file KTP/KTM tidak valid!',
+                        customClass: {
+                            confirmButton: "swal2-confirm"
+                        }
+                    });
+                    fileInput.value = '';
+                    return false;
+                }
+
+                let fileSize = fileInput.files[0].size;
+                if (fileSize > 2000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Ukuran file KTP/KTM lebih dari 2 MB!',
+                        customClass: {
+                            confirmButton: "swal2-confirm"
+                        }
+                    });
+                    fileInput.value = '';
+                    return false;
+                }
+            }
+
+            // surat skpb
+            let fileInput2 = document.getElementById('surat_skpb');
+            if (fileInput2) {
+                let filePath2 = fileInput2.value;
+                if (!allowedExtensions2.exec(filePath2)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Format file Surat SKPB tidak valid!',
+                        customClass: {
+                            confirmButton: "swal2-confirm"
+                        }
+                    });
+                    fileInput2.value = '';
+                    return false;
+                }
+
+                let fileSize2 = fileInput2.files[0].size;
+                if (fileSize2 > 2000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Ukuran file Surat SKPB lebih dari 2 MB!',
+                        customClass: {
+                            confirmButton: "swal2-confirm"
+                        }
+                    });
+                    fileInput2.value = '';
+                    return false;
+                }
+            }
+
+            // surat sarpras
+            let fileInput3 = document.getElementById('surat_sarpras');
+            if (fileInput3) {
+                let filePath3 = fileInput3.value;
+                if (!allowedExtensions2.exec(filePath3)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Format file Surat Sarpras tidak valid!',
+                        customClass: {
+                            confirmButton: "swal2-confirm"
+                        }
+                    });
+                    fileInput3.value = '';
+                    return false;
+                }
+
+                let fileSize3 = fileInput3.files[0].size;
+                if (fileSize3 > 2000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Ukuran file Surat Sarpras lebih dari 2 MB!',
+                        customClass: {
+                            confirmButton: "swal2-confirm"
+                        }
+                    });
+                    fileInput3.value = '';
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        
+    </script>
+
+
 
 </body>
 

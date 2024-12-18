@@ -1,6 +1,7 @@
 <?php
 session_start();
-$foto_ktp = isset($_SESSION['foto_ktp']) ? $_SESSION['foto_ktp'] : null;
+// $foto_ktp = isset($_SESSION['foto_ktp']) ? $_SESSION['foto_ktp'] : null;
+// var_dump($foto_ktp);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kode_peminjaman = $_POST["kode_peminjaman"];
     $nama = $_POST["nama"];
@@ -19,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sesi6 = isset($_POST["sesi6"]) ? 1 : 0;
 
     // Your database connection code here
-    $conn = mysqli_connect("localhost", "root", "", "booking_system2");
+    $conn = mysqli_connect("localhost", "root", "", "booking_system");
     $sql = "SELECT DISTINCT nama_ruangan FROM ruangan 
     WHERE nama_ruangan NOT IN (
         SELECT ruangan FROM pengajuan2 
@@ -119,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="hidden" name="nama" value="<?php echo $nama; ?>">
                         <input type="hidden" name="nrp" value="<?php echo $nrp; ?>">
                         <input type="hidden" name="whatsapp" value="<?php echo $whatsapp; ?>">
-                        <input type="hidden" name="foto_ktp" value="<?php echo $foto_ktp; ?>">
+                        <!-- <input type="hidden" name="foto_ktp" value="<?php echo $foto_ktp; ?>"> -->
                         <input type="hidden" name="unit_departemen" value="<?php echo $unit_departemen; ?>">
                         <input type="hidden" name="jumlah" value="<?php echo $jumlah; ?>">
                         <input type="hidden" name="kode_peminjaman" value="<?php echo $kode_peminjaman; ?>">
@@ -156,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- <script src="dist/js/slider.js"></script> -->
     <script src="../dist/js/script.js"></script>
-    <script type="module" src="../script.js"></script>
+    <script type="module" src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function validateForm() {

@@ -31,6 +31,8 @@
                                     <!-- <option value="" disabled selected hidden>Pilih Tahun</option> -->
                                     <option value="2024">2024</option>
                                     <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2027">2027</option>
                                 </select>
                             </label>
                         </div>
@@ -73,62 +75,74 @@
 
                     
 
+                    <!-- Tambahkan di dalam div#tabel atau di tempat yang sesuai -->
+                    <div id="loading" style="display: none;" class="text-center mt-4">
+                        <svg class="animate-spin h-5 w-5 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l-3 3 3 3v4a8 8 0 01-8-8z"></path>
+                        </svg>
+                    </div>
                     <div id="tabel" class="mt-4">
                         <!-- Kolom tanggal akan diisi menggunakan PHP -->
                     </div>
 
+
+
                     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-                    <script src="your-script.js"></script>
+                    <script src="utilitas-script.php"></script>
 
                     <script>
-                       document.addEventListener("DOMContentLoaded", function() {
-                        const tahunDropdown = document.getElementById("tahun");
-                        const bulanDropdown = document.getElementById("bulan");
-                        const mingguDropdown = document.getElementById("minggu");
-                        const tabelContainer = document.getElementById("tabel");
+                        document.addEventListener("DOMContentLoaded", function() {
+                            const tahunDropdown = document.getElementById("tahun");
+                            const bulanDropdown = document.getElementById("bulan");
+                            const mingguDropdown = document.getElementById("minggu");
+                            const tabelContainer = document.getElementById("tabel");
+                            const loading = document.getElementById("loading");
 
-                        function updateTable() {
-                            const selectedTahun = tahunDropdown.value;
-                            const selectedBulan = bulanDropdown.value;
-                            const selectedMinggu = mingguDropdown.value;
+                            function updateTable() {
+                                const selectedTahun = tahunDropdown.value;
+                                const selectedBulan = bulanDropdown.value;
+                                const selectedMinggu = mingguDropdown.value;
 
-                            // Retrieve cached data from sessionStorage if available
-                            const cacheKey = `room_availability_${selectedTahun}_${selectedBulan}_${selectedMinggu}`;
-                            const cachedData = sessionStorage.getItem(cacheKey);
-                            if (cachedData) {
-                                tabelContainer.innerHTML = cachedData;
-                                return;
+                                // console.log(`Requesting data for Tahun: ${selectedTahun}, Bulan: ${selectedBulan}, Minggu: ${selectedMinggu}`);
+
+                                // Tampilkan ikon loading
+                                loading.style.display = "block";
+                                tabelContainer.innerHTML = ""; // Kosongkan tabel saat loading
+
+                                // Always fetch new data from the server, do not use cache
+                                $.ajax({
+                                    url: 'utilitas-script.php',
+                                    type: 'GET',
+                                    data: {
+                                        tahun: selectedTahun,
+                                        bulan: selectedBulan,
+                                        minggu: selectedMinggu
+                                    },
+                                    success: function(response) {
+                                        // console.log('AJAX request successful');
+                                        tabelContainer.innerHTML = response;
+                                        loading.style.display = "none"; // Sembunyikan ikon loading setelah data dimuat
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown) {
+                                        // console.log('AJAX request failed: ', textStatus, errorThrown);
+                                        tabelContainer.innerHTML = '<p>Error loading data. Please try again later.</p>';
+                                        loading.style.display = "none"; // Sembunyikan ikon loading jika ada kesalahan
+                                    }
+                                });
                             }
 
-                            // Make AJAX request to fetch room availability data
-                            $.ajax({
-                                url: 'utilitas-script.php',
-                                type: 'GET',
-                                data: {
-                                    tahun: selectedTahun,
-                                    bulan: selectedBulan,
-                                    minggu: selectedMinggu
-                                },
-                                success: function(response) {
-                                    tabelContainer.innerHTML = response;
+                            tahunDropdown.addEventListener("change", updateTable);
+                            bulanDropdown.addEventListener("change", updateTable);
+                            mingguDropdown.addEventListener("change", updateTable);
 
-                                    // Cache the response in sessionStorage
-                                    sessionStorage.setItem(cacheKey, response);
-                                },
-                                error: function() {
-                                    console.log('Failed to fetch data from server.');
-                                }
-                            });
-                        }
+                            updateTable(); // Initialize table when the page is loaded
+                        });
 
-                        tahunDropdown.addEventListener("change", updateTable);
-                        bulanDropdown.addEventListener("change", updateTable);
-                        mingguDropdown.addEventListener("change", updateTable);
-
-                        updateTable(); // Initialize table when the page is loaded
-                    });
 
                     </script>
+
+
                 </div>
             </div>
         </div>

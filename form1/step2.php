@@ -2,12 +2,11 @@
 
 session_start();
 
-// Retrieve no_tiket from session
 $kode_peminjaman = isset($_SESSION['kode_peminjaman']) ? $_SESSION['kode_peminjaman'] : null;
-$foto_ktp = isset($_SESSION['foto_ktp']) ? $_SESSION['foto_ktp'] : null;
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // $kode_peminjaman = $_POST["kode_peminjaman"];
+    
     $nama = $_POST["nama"];
     $nrp = $_POST["nrp"];
     $whatsapp = $_POST["whatsapp"];
@@ -30,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="../dist/img/component/Logo_SKPB-biru.png">
     <link rel="stylesheet" href="../dist/output.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .checkbox-group input[type="checkbox"],
         .checkbox-group label {
@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="hidden" name="nama" value="<?php echo $nama; ?>">
                         <input type="hidden" name="nrp" value="<?php echo $nrp; ?>">
                         <input type="hidden" name="whatsapp" value="<?php echo $whatsapp; ?>">
-                        <input type="hidden" name="foto_ktp" value="<?php echo $foto_ktp; ?>"> 
+                        <!-- <input type="hidden" name="foto_ktp" value="<?php echo $foto_ktp; ?>">  -->
                         <input type="hidden" name="unit_departemen" value="<?php echo $unit_departemen; ?>">
                         <input type="hidden" name="jumlah" value="<?php echo $jumlah; ?>">
                         <input type="hidden" name="kode_peminjaman" value="<?php echo $kode_peminjaman; ?>">
@@ -138,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nama = $_GET["nama"];
         $nrp = $_GET["nrp"];
         $whatsapp = $_GET["whatsapp"];
-        $foto_ktp = $_GET["foto_ktp"];
+        // $foto_ktp = $_GET["foto_ktp"];
         $unit_departemen = $_GET["unit_departemen"];
         $nama_acara = $_GET["nama_acara"];
         $jumlah = $_GET["jumlah"];
@@ -240,7 +240,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="hidden" name="nama" value="<?php echo $nama; ?>">
                         <input type="hidden" name="nrp" value="<?php echo $nrp; ?>">
                         <input type="hidden" name="whatsapp" value="<?php echo $whatsapp; ?>">
-                        <input type="hidden" name="foto_ktp" value="<?php echo $foto_ktp; ?>">
+                        <!-- <input type="hidden" name="foto_ktp" value="<?php echo $foto_ktp; ?>"> -->
                         <input type="hidden" name="unit_departemen" value="<?php echo $unit_departemen; ?>">
                         <input type="hidden" name="jumlah" value="<?php echo $jumlah; ?>">
                         <input type="hidden" name="kode_peminjaman" value="<?php echo $kode_peminjaman; ?>">
@@ -275,8 +275,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- <script src="dist/js/slider.js"></script> -->
     <script src="../dist/js/script.js"></script>
-    <script type="module" src="../script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="script.js"></script>
+
     <script>
         // Mendapatkan elemen input tanggal
         var inputDate = document.getElementById('endDate');

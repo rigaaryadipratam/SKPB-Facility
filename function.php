@@ -1,31 +1,35 @@
 <?php
 
-$db = mysqli_connect("localhost", "root", "", "booking_system2");
+$db = mysqli_connect("localhost", "root", "", "booking_system");
 
-function upload_ktp()
-{
+function upload_ktp(){
     $namaFile = $_FILES['foto_ktp']['name'];
     $ukuranFile = $_FILES['foto_ktp']['size'];
+    $error = $_FILES['foto_ktp']['error'];
     $tmpName = $_FILES['foto_ktp']['tmp_name'];
+
+    if($error===4){
+        return "";
+    }
 
         $ekstensiGambarValid = ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG', 'pdf'];
         $ekstensiGambar = explode('.', $namaFile);
         $ekstensiGambar = strtolower(end($ekstensiGambar));
 
-        if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
-            echo "<script>
-                    alert('Format file KTP/KTM tidak valid!');
-                </script>";
-            return false;
-        }
+        // if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
+        //     echo "<script>
+        //             alert('Format file KTP/KTM tidak valid!');
+        //         </script>";
+        //     return false;
+        // }
 
-        // cek jika ukurannya terlalu besar
-        if ($ukuranFile > 2000000) {
-            echo "<script>
-                    alert('Ukuran file lebih dari 2 MB!');
-                </script>";
-            return false;
-        }
+        // // cek jika ukurannya terlalu besar
+        // if ($ukuranFile > 2000000) {
+        //     echo "<script>
+        //             alert('Ukuran file lebih dari 2 MB!');
+        //         </script>";
+        //     return false;
+        // }
 
         // lolos pengecekan, gambar siap diupload
         // generate nama gambar baru
@@ -34,7 +38,6 @@ function upload_ktp()
         $namaFileBaru .= $ekstensiGambar;
 
         move_uploaded_file($tmpName, 'pengelola/dist/img/ktm/' . $namaFileBaru);
-
         return $namaFileBaru;
     
 }
@@ -53,20 +56,20 @@ function upload_surat_skpb()
         $ekstensiGambar = explode('.', $namaFile);
         $ekstensiGambar = strtolower(end($ekstensiGambar));
 
-        if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
-            echo "<script>
-                    alert('Format file surat SKPB tidak valid!');
-                </script>";
-            return false;
-        }
+        // if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
+        //     echo "<script>
+        //             alert('Format file surat SKPB tidak valid!');
+        //         </script>";
+        //     return false;
+        // }
 
-        // cek jika ukurannya terlalu besar
-        if ($ukuranFile > 2000000) {
-            echo "<script>
-                    alert('Ukuran file surat SKPB lebih dari 2 MB!');
-                </script>";
-            return false;
-        }
+        // // cek jika ukurannya terlalu besar
+        // if ($ukuranFile > 2000000) {
+        //     echo "<script>
+        //             alert('Ukuran file surat SKPB lebih dari 2 MB!');
+        //         </script>";
+        //     return false;
+        // }
 
         // lolos pengecekan, gambar siap diupload
         // generate nama gambar baru
@@ -93,20 +96,20 @@ function upload_surat_sarpras(){
         $ekstensiGambar = explode('.', $namaFile);
         $ekstensiGambar = strtolower(end($ekstensiGambar));
 
-        if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
-            echo "<script>
-                    alert('Format file surat sarpras tidak valid!');
-                </script>";
-            return false;
-        }
+        // if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
+        //     echo "<script>
+        //             alert('Format file surat sarpras tidak valid!');
+        //         </script>";
+        //     return false;
+        // }
 
-        // cek jika ukurannya terlalu besar
-        if ($ukuranFile > 2000000) {
-            echo "<script>
-                    alert('Ukuran file Surat Sarpras lebih dari 2 MB!');
-                </script>";
-            return false;
-        }
+        // // cek jika ukurannya terlalu besar
+        // if ($ukuranFile > 2000000) {
+        //     echo "<script>
+        //             alert('Ukuran file Surat Sarpras lebih dari 2 MB!');
+        //         </script>";
+        //     return false;
+        // }
 
         // lolos pengecekan, gambar siap diupload
         // generate nama gambar baru
@@ -118,6 +121,26 @@ function upload_surat_sarpras(){
 
         return $namaFileBaru;
     
+}
+
+function up_ktp($data){
+    global $db;
+
+    $kode_peminjaman = $_GET["kode_peminjaman"];
+
+    $ktp = upload_ktp();
+    
+    if(!$ktp){
+        return false;
+    }
+
+    // Ubah query untuk hanya memasukkan surat_sarpras dan ktp
+    $query = "UPDATE pengajuan2 SET 
+                foto_ktp = '$ktp'
+              WHERE kode_peminjaman = '$kode_peminjaman'";
+
+    mysqli_query($db, $query);
+    return mysqli_affected_rows($db);
 }
 function up_surat_skpb($data){
     global $db;

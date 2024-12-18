@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama = $_POST["nama"];
     $nrp = $_POST["nrp"];
     $whatsapp = $_POST["whatsapp"];
-    $foto_ktp = $_POST["foto_ktp"];
+    // $foto_ktp = $_POST["foto_ktp"];
     $unit_departemen = $_POST["unit_departemen"];
     $jumlah = $_POST["jumlah"];
     $nama_acara= $_POST["nama_acara"];
@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="hidden" name="nama" value="<?php echo $nama; ?>">
                         <input type="hidden" name="nrp" value="<?php echo $nrp; ?>">
                         <input type="hidden" name="whatsapp" value="<?php echo $whatsapp; ?>">
-                        <input type="hidden" name="foto_ktp" value="<?php echo $foto_ktp; ?>">
+                        <!-- <input type="hidden" name="foto_ktp" value="<?php echo $foto_ktp; ?>"> -->
                         <input type="hidden" name="unit_departemen" value="<?php echo $unit_departemen; ?>">
                         <input type="hidden" name="jumlah" value="<?php echo $jumlah; ?>">
                         <input type="hidden" name="kode_peminjaman" value="<?php echo $kode_peminjaman; ?>">
@@ -139,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nama = $_GET["nama"];
         $nrp = $_GET["nrp"];
         $whatsapp = $_GET["whatsapp"];
-        $foto_ktp = $_GET["foto_ktp"];
+        // $foto_ktp = $_GET["foto_ktp"];
         $unit_departemen = $_GET["unit_departemen"];
         $nama_acara = $_GET["nama_acara"];
         $jumlah = $_GET["jumlah"];
@@ -241,7 +241,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="hidden" name="nama" value="<?php echo $nama; ?>">
                         <input type="hidden" name="nrp" value="<?php echo $nrp; ?>">
                         <input type="hidden" name="whatsapp" value="<?php echo $whatsapp; ?>">
-                        <input type="hidden" name="foto_ktp" value="<?php echo $foto_ktp; ?>">
+                        <!-- <input type="hidden" name="foto_ktp" value="<?php echo $foto_ktp; ?>"> -->
                         <input type="hidden" name="unit_departemen" value="<?php echo $unit_departemen; ?>">
                         <input type="hidden" name="jumlah" value="<?php echo $jumlah; ?>">
                         <input type="hidden" name="kode_peminjaman" value="<?php echo $kode_peminjaman; ?>">
